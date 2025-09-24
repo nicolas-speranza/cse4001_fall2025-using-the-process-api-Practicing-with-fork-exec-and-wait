@@ -76,6 +76,10 @@ int main(void) {
 ![image](q1.png)
 When a process calls fork(), the child gets a copy of the parent’s memory. Both start with the same initial value of x, but changes made in the child do not affect the parent’s copy, and vice versa. Each process has its own independent address space.
 
+
+
+
+
 2. Write a program that opens a file (with the `open()` system call) and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `open()`? What happens when they are writing to the file concurrently, i.e., at the same time?
 
 Code:
@@ -110,6 +114,10 @@ int main(void) {
 ![image](q2.png)
 File descriptors are shared across fork(). Both parent and child can write to the same file because they share the same open file description (same offset). Writes are atomic per line, but the overall ordering of lines in the file depends on the scheduler, so the output can appear in different orders on different runs.
 
+
+
+
+
 3. Write another program using `fork()`.The child process should print “hello”; the parent process should print “goodbye”. You should try to ensure that the child process always prints first; can you do this without calling `wait()` in the parent?
 
 Code:
@@ -142,6 +150,9 @@ int main(void) {
 
 ![image](q3.png)
 Using a pipe allows the parent to block on read() until the child signals it. This ensures the child always prints first without using wait(). Synchronization happens because the parent only continues after the child writes into the pipe.
+
+
+
 
 
 4. Write a program that calls `fork()` and then calls some form of `exec()` to run the program `/bin/ls`. See if you can try all of the variants of `exec()`, including (on Linux) `execl()`, `execle()`, `execlp()`, `execv()`, `execvp()`, and `execvpe()`. Why do you think there are so many variants of the same basic call?
@@ -184,6 +195,10 @@ int main(int argc, char **argv) {
 ![image](q4.png)
 execvp() replaces the current process image with a new program. In this case, the child process calls execvp("ls", argv) to run /bin/ls. The p in execvp means it searches for the program in the directories listed in the PATH environment variable instead of requiring the full path. After a successful execvp(), the child no longer executes any of its old code — it becomes the new program (ls). The parent process is unaffected and continues running normally, waiting for the child to finish.
 
+
+
+
+
 5. Now write a program that uses `wait()` to wait for the child process to finish in the parent. What does `wait()` return? What happens if you use `wait()` in the child?
 
 Code:
@@ -210,6 +225,10 @@ int main(void) {
 
 ![image](q5.png)
 wait() makes the parent pause until one of its children exits. It returns the PID of the terminated child and fills the status code, which can be checked with WIFEXITED and WEXITSTATUS. If called in a process with no children (like inside the child itself), wait() fails and returns -1 with errno = ECHILD.
+
+
+
+
 
 6. Write a slight modification of the previous program, this time using `waitpid()` instead of `wait()`. When would `waitpid()` be useful?
 
@@ -242,6 +261,10 @@ int main(void) {
 
 ![image](q6.png)
 waitpid() is more flexible than wait(). It can wait for a specific child PID and can be used with options like WNOHANG for non-blocking checks. This is useful when a parent has multiple children and needs to handle them individually or avoid blocking indefinitely.
+
+
+
+
 
 7. Write a program that creates a child process, and then in the child closes standard output (`STDOUT FILENO`). What happens if the child calls `printf()` to print some output after closing the descriptor?
 
