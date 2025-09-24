@@ -56,38 +56,26 @@ Use the Linux in your CSE4001 container. If you are using macOS, you may use the
 
 2. Write a program that opens a file (with the `open()` system call) and then calls `fork()` to create a new process. Can both the child and parent access the file descriptor returned by `open()`? What happens when they are writing to the file concurrently, i.e., at the same time?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q2.png)
 
 3. Write another program using `fork()`.The child process should print “hello”; the parent process should print “goodbye”. You should try to ensure that the child process always prints first; can you do this without calling `wait()` in the parent?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q3.png)
 
 
 4. Write a program that calls `fork()` and then calls some form of `exec()` to run the program `/bin/ls`. See if you can try all of the variants of `exec()`, including (on Linux) `execl()`, `execle()`, `execlp()`, `execv()`, `execvp()`, and `execvpe()`. Why do you think there are so many variants of the same basic call?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q4.png)
 
 5. Now write a program that uses `wait()` to wait for the child process to finish in the parent. What does `wait()` return? What happens if you use `wait()` in the child?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q5.png)
 
 6. Write a slight modification of the previous program, this time using `waitpid()` instead of `wait()`. When would `waitpid()` be useful?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q6.png)
 
 7. Write a program that creates a child process, and then in the child closes standard output (`STDOUT FILENO`). What happens if the child calls `printf()` to print some output after closing the descriptor?
 
-```cpp
-// Add your code or answer here. You can also add screenshots showing your program's execution.  
-```
+![image](q7.png)
 
